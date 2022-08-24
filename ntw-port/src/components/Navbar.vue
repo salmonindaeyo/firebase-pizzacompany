@@ -11,10 +11,10 @@
   </a>
   <div class="flex md:order-2">
 
-      <div class="relative group drop-shadow-lg transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-100 ">
+      <div class="relative group drop-shadow-lg transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-150 ">
         <div class="absolute -inset-0
          bg-gradient-to-r from-yellow-500 to-red-700
-          rounded-lg blur-sm opacity-100        
+          rounded-lg blur opacity-95        
           "> </div>
       <button  class=" relative px-7 py-4 bg-black rounded-lg leading-none flex items-center text-white">Resume</button>
     </div>

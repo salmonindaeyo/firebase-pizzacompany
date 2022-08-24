@@ -6,13 +6,13 @@
 <div>
    <div class="grid grid-cols-2   space-y-7  items-center  ml-36  relative">
 
-    <div class="flex items-center justify-center ">
+    <div class="flex items-center justify-center  ">
        N U T T A W A T <br/>
        asdsd
       
         
         </div>
-<div class=" flex items-center justify-center pt-24">
+<div class=" flex items-center pt-24 justify-between  ">
   <div class="relative w-full max-w-lg ">
     <div class="absolute top-0 -left-4 w-72 h-72 bg-red-300 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob"></div>
     <div class="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob animation-delay-1000"></div>
@@ -25,7 +25,7 @@
           <div class="h-4 w-48 bg-gray-300 rounded"></div>
         </div>
         <div>
-          <div class="w-24 h-6 rounded-lg bg-purple-300"></div>
+          <div class="w-24 h-6 rounded-lg bg-green-200 text-green-900 text-center font-semibold"> vue </div>
         </div>
       </div>
 
@@ -59,9 +59,8 @@
 </template>
  
 <style>
-*,
-*:before,
-*:after{
+
+body {
     
     font-family: Helvetica;
    
