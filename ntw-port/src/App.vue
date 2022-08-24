@@ -13,7 +13,7 @@ import Navbar from '../src/components/Navbar.vue'
       flex-col
       justify-center
       overflow-hidden
-      bg-gray-50
+     
       font-rubik
       
     "
@@ -21,7 +21,6 @@ import Navbar from '../src/components/Navbar.vue'
     
     <Navbar/>
       <div class="mt-3"><router-view> </router-view> </div>
-      xxxxxxxxxxxxtest
   </div>
 </template>
 
