@@ -3,7 +3,7 @@
 </script>
  
 <template>
-<nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
+<nav class=" border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
   <div class="container flex flex-wrap justify-between items-center mx-auto">
   <a class="flex items-center">
       <img src="../assets/ntwlogo.png" class="mr-3 h-28 sm:h-32" alt="ntw logo" />
@@ -25,7 +25,7 @@
     </button>
   </div>
   <div class=" justify-between items-center w-full md:flex md:w-auto md:order-1" >
-    <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+    <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-gray-100">
       <li>
        <router-link
               :to="{name: 'Home' }"
