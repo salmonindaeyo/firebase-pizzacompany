@@ -6,7 +6,7 @@ import Navbar from '../src/components/Navbar.vue'
 <template>
   <div
     class="
-      bg-gray-100
+      bg-white
       relative
        
       min-h-screen
