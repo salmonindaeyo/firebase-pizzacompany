@@ -42,7 +42,7 @@ function toggle () {
       </li>
       <li>
        <router-link
-              :to="{name: 'About'  }"
+              :to="{name: ''  }"
               class="
                        block
                 md:hover:bg-yellow-100 md:hover:px-1  md:hover:rounded-lg
@@ -56,7 +56,7 @@ function toggle () {
       </li>
       <li>
 <router-link
-              :to="{name: 'Project' }"
+              :to="{name: '' }"
               class="
                  block
                 md:hover:bg-yellow-100 md:hover:px-1  md:hover:rounded-lg
@@ -68,7 +68,7 @@ function toggle () {
             >      </li>
       <li>
 <router-link
-              :to="{name: 'Contact' }"
+              :to="{name: '' }"
               class="
           
                  block

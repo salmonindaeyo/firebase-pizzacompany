@@ -4,12 +4,6 @@ import TextHome from "../components/TextHome.vue"
 </script>
  
 <template>
-<<<<<<< Updated upstream
-<div class="flex mt-48 ">
-  <div class="m-auto">
-    <h3><TextHome/></h3>
-    
-=======
   <div>
     <div class="grid grid-cols-2  text-gray-900 space-y-7 drop-shadow-lg  items-center  ml-36  relative">
 
@@ -104,13 +98,12 @@ import TextHome from "../components/TextHome.vue"
           </div>
         </div>
 
-      </div>
+   
 
 
 
     </div>
 
->>>>>>> Stashed changes
   </div>
 </div>
 </template>
