@@ -11,7 +11,7 @@ import TextHome from "../components/TextHome.vue"
           
           <TextHome/>
           
-          <p class="text-neutral-500 text-2xl	drop-shadow-lg">Hi , i'm nut !! Welcome to my portfolio 🥳</p>
+          <p class="text-neutral-500 text-2xl	drop-shadow-lg w-3/4 mt-12">เว็บสำหรับการเลือกซื้อพิซซ่า 🥳</p>
 
       <br /> 
         <ButtonLink name="get to know me →" link="About" addStyle="bg-red-400" class="text-white mt-8"/>
@@ -35,21 +35,19 @@ import TextHome from "../components/TextHome.vue"
 
             <div class="p-5 bg-white rounded-lg flex items-center justify-between space-x-8 mr-10">
               <div class="flex-1 ">
-                <div class="mb-2 ml-1 text-gray-600">Front end 🌱</div>
+                <div class="mb-2 ml-1 text-gray-600">พิซซ่า ฮาวายเอี้ยน 🍕</div>
                 <div class="text-sm">
                   <span class="w-24 px-4 py-0.5 h-6 rounded-lg bg-yellow-100 text-yellow-600 text-center font-semibold">
-                    js </span>
+                    แฮม </span>
                   <span
                     class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-green-100 text-green-900 text-center font-semibold">
-                    vue </span>
+                    สับประรด </span>
                   <span
                     class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-emerald-200 text-green-700 text-center font-semibold">
-                    Nuxt.js </span>
+                    ชีท </span>
                   <span class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-rose-200 text-red-500 text-center font-semibold">
-                    html </span>
-                  <span
-                    class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-blue-200 text-blue-500 text-center font-semibold">
-                    tailwind </span>
+                    แป้งหนาหนุ่ม </span>
+                  
 
 
                 </div>
@@ -59,13 +57,13 @@ import TextHome from "../components/TextHome.vue"
 
             <div class="p-5 bg-white rounded-lg flex items-center justify-between space-x-8 ml-10">
               <div class="flex-1 ">
-                <div class="mb-2 ml-1 text-gray-600">Back End 🧗‍♀️</div>
+                <div class="mb-2 ml-1 text-gray-600">พิซซ่า โฟร์ชีสและเบคอน 🍕</div>
                 <div class="text-sm">
                   <span class="w-24 px-4 py-0.5 h-6 rounded-lg bg-lime-200 text-green-600 text-center font-semibold">
-                    Spring boot </span>
+                    เบคอน </span>
                   <span
                     class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-violet-200 text-violet-700 text-center font-semibold">basic
-                    RESTful API </span>
+                    ชีท </span>
 
 
 
@@ -77,16 +75,16 @@ import TextHome from "../components/TextHome.vue"
 
             <div class="p-5 bg-white rounded-lg flex items-center justify-between space-x-8 mr-7 ml-3">
               <div class="flex-1 ">
-                <div class="mb-2 ml-1 text-gray-600">Other 🔮</div>
+                <div class="mb-2 ml-1 text-gray-600">สไปซี่ ซุปเปอร์ซีฟู้ด พิซซ่า 🍕</div>
                 <div class="text-sm">
                   <span class="w-24 px-4 py-0.5 h-6 rounded-lg bg-gray-200 text-gray-600 text-center font-semibold">
-                    GitHub </span>
+                    กุ้งปลาหมึก </span>
                   <span
-                    class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-sky-200 text-sky-700 text-center font-semibold">Basic
-                    Docker </span>
+                    class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-sky-200 text-sky-700 text-center font-semibold">
+                    พริกหยวก </span>
                   <span
-                    class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-orange-200 text-orange-700 text-center font-semibold">linux
-                    command </span>
+                    class="ml-2 w-24 h-6 px-4 py-0.5 rounded-lg bg-orange-200 text-orange-700 text-center font-semibold">
+                    ชีท </span>
 
 
 

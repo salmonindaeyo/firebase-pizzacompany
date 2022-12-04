@@ -4,13 +4,13 @@
  
 <template>
 <div>
-    <div>Hi , i'm</div>
+    <div>Hi , do u want </div>
 <div class="start text-6xl font-bold	">
    
-        <span class="end1 text-red-400">N</span><span class="middle1">UTTAWA</span>
-        <span class="middle2"><i class="fas fa-code"></i></span><span class="end2 text-yellow-500">T</span>
+        <span class="end1 text-red-400">P</span><span class="middle1">IZZA305</span>
+        <span class="middle2"><i class="fas fa-code"></i></span><span class="end2 text-yellow-500">?</span>
     </div>
-    <div>  welcome to my website  🥳🎉</div>
+    <div>  we love pizza 🥳🎉</div>
     </div>
 </template>
  
