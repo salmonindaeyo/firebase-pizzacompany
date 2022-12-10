@@ -54,6 +54,21 @@ function toggle () {
             >
           
       </li>
+
+      <li>
+       <router-link
+              :to="{name: 'login'  }"
+              class="
+                  text-2xl     block
+                md:hover:bg-yellow-100 md:hover:px-1  md:hover:rounded-lg
+                md:hover:text-orange-500 md:p-0
+                hover:bg-gray-100 md:hover:bg-transparent md:p-0 
+                py-2 pr-4 pl-3
+              "
+              >👤 login</router-link
+            >
+          
+      </li>
      
     </ul>
       </div>

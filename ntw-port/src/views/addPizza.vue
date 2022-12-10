@@ -59,7 +59,7 @@ onMounted(() => {
   <div>
  <!-- <div class="text-blue-200 text-sm">{{ingredients}}</div> -->
 
-
+      
  <div v-for='item in ingredients.meat'>
     {{item.id}}
   <li v-for='element in item.ingredient'>
