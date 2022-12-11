@@ -35,7 +35,7 @@ function toggle () {
 <div class="font-sans antialiased " id="app">
   <nav class="container flex flex-wrap justify-between items-center mx-auto">
     <div class="flex items-center flex-no-shrink text-white mr-6">
-      <img src="../assets/ntwlogo.png" class="w-24" />
+      <img src="../assets/cat.png" class="w-24" />
   
     </div>
     <div class="visible  md:invisible  ">
@@ -86,6 +86,21 @@ function toggle () {
                 py-2 pr-4 pl-3
               "
               >👤 login</router-link
+            >
+          
+      </li>
+
+      <li v-if="!checkUser">
+       <router-link
+              :to="{name: 'SignUp'  }"
+              class="
+                  text-2xl     block
+                md:hover:bg-yellow-100 md:hover:px-1  md:hover:rounded-lg
+                md:hover:text-orange-500 md:p-0
+                hover:bg-gray-100 md:hover:bg-transparent md:p-0 
+                py-2 pr-4 pl-3
+              "
+              > SignUp</router-link
             >
           
       </li>

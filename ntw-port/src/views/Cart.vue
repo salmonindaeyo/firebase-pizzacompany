@@ -21,7 +21,13 @@ async function getCart(){
     })
   })
 
-  const pizzaRef = collection(db,"cart",Username.value,"Pizza")
+  pizzaList()
+
+}
+
+async function pizzaList () {
+
+    const pizzaRef = collection(db,"cart",Username.value,"Pizza")
       const pizzaSnapshot = await getDocs(pizzaRef)
       pizzaSnapshot.forEach((pizza)=> {
         let pizzadata = pizza.data()
@@ -30,7 +36,8 @@ async function getCart(){
         console.log(PizzaCart.value)
       })
 
-}
+  }
+
 
 async function deletePizza(index) {
     const docRef = doc(db,"cart",Username.value,"Pizza",PizzaCart.value[index].id);
@@ -51,7 +58,7 @@ const Username = ref(null)
 onMounted(() => {
 
      Username.value = localStorage.getItem("username")
-if(Username==null) {
+if(Username.value==null) {
 	formShow.value = false
 }
 getCart() 
@@ -67,10 +74,10 @@ getCart()
       กรุณาล็อกอินเพื่อดูรถเข็น
   </div>
 
-  <div>
-   
+  <div  >
+
 <div v-for="test in PizzaCart"></div>
-<body class="bg-gray-100">
+<body v-if="formShow" class="">
   <div class="container mx-auto mt-10">
     <div class="flex shadow-md my-10">
       <div class="w-3/4 bg-white px-10 py-10">

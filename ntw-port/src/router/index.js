@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import addPizza from "../views/addPizza.vue";
 import login from "../views/login.vue";
 import cart from "../views/Cart.vue";
+import SignUp from "../views/signUp.vue";
 
 
 //const history = createWebHistory();
@@ -27,6 +28,11 @@ const routes = [
     path: "/cart",
     name: "cart",
     component: cart,
+  } ,
+  {
+    path: "/SignUp",
+    name: "SignUp",
+    component: SignUp,
   } 
 ];
 
