@@ -1,43 +1,43 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import { onSnapshot , query , collection , getDocs, deleteDoc , doc , setDoc, Timestamp , addDoc , updateDoc , where } from "firebase/firestore"
+import { ref, onMounted, onBeforeUpdate, onUpdated } from 'vue'
+import { onSnapshot, query, collection, getDocs, deleteDoc, doc, setDoc, Timestamp, addDoc, updateDoc, where } from "firebase/firestore"
 import db from '../firebase/init.js'
 
-const ingredients = ref({meat:[]},{vegetable:[]},{bread:[]})
+const ingredients = ref({ meat: [] }, { vegetable: [] } ,{ bread: [] } )
 
-async function getIngredients(){
+async function getIngredients() {
 
-  const qry =  query(collection(db, 'ingredients'))
-  const postsQry = query(qry,where("name","==","meat"))
+  const qry = query(collection(db, 'ingredients'))
+  const postsQry = query(qry, where("name", "==", "meat"))
   const un = await onSnapshot(postsQry, (querySnap) => {
-    ingredients.value.meat=[]
-  querySnap.forEach((doc) => {
-      console.log(doc.data());
+    ingredients.value.meat = []
+    querySnap.forEach((doc) => {
+      
       let data = doc.data();
       data.id = doc.id;
       ingredients.value.meat.push(data);
     })
   })
 
-  const qry2 =  query(collection(db, 'ingredients'))
-  const postsQry2 = query(qry2,where("name","==","vegetable"))
+  const qry2 = query(collection(db, 'ingredients'))
+  const postsQry2 = query(qry2, where("name", "==", "vegetable"))
   const un2 = await onSnapshot(postsQry2, (querySnap) => {
-    ingredients.value.vegetable=[]
-  querySnap.forEach((doc) => {
-      console.log(doc.data());
+    ingredients.value.vegetable = []
+    querySnap.forEach((doc) => {
+     
       let data = doc.data();
       data.id = doc.id;
       ingredients.value.vegetable.push(data);
     })
   })
 
-  const qry3 =  query(collection(db, 'ingredients'))
-  const postsQry3 = query(qry3,where("name","==","bread"))
+  const qry3 = query(collection(db, 'ingredients'))
+  const postsQry3 = query(qry3, where("name", "==", "bread"))
   const un3 = await onSnapshot(postsQry3, (querySnap) => {
-    ingredients.value.bread=[]
-  querySnap.forEach((doc) => {
-      console.log(doc.data());
+    ingredients.value.bread = []
+    querySnap.forEach((doc) => {
+      
       let data = doc.data();
       data.id = doc.id;
       ingredients.value.bread.push(data);
@@ -48,56 +48,190 @@ async function getIngredients(){
 
 }
 
-    
-const formShow =ref(true)
-onMounted(() => {
-    getIngredients() 
 
-    const check = localStorage.getItem("username")
-if(check==null) {
-	formShow.value = false
-}
+const formShow = ref(true)
+onMounted(() => {
+  getIngredients()
+
+  const check = localStorage.getItem("username")
+  if (check == null) {
+    formShow.value = false
+  }
 
 })
 
+ onUpdated(async ()  => {
+
+  CalPrice()
+})
+
+const data = ref({ meat: [], vegetable: [], bread: "" })
+
+const TotalPrice = ref(0)
+
+ async function CalPrice() {
+  
+  TotalPrice.value = 0
+
+ 
+   
+  for (let h = 0; h < data.value.meat.length; h++) {
+
+    for (let i = 0; i < ingredients.value.meat[0].ingredient.length; i++) {
+
+      if (data.value.meat[h] == ingredients.value.meat[0].ingredient[i].name) {
+
+        TotalPrice.value = TotalPrice.value + ingredients.value.meat[0].ingredient[i].price
+
+      }
+
+    }
+  }
+
+  for (let h = 0; h < data.value.vegetable.length; h++) {
+
+    for (let i = 0; i < ingredients.value.vegetable[0].ingredient.length; i++) {
+
+      if (data.value.vegetable[h] == ingredients.value.vegetable[0].ingredient[i].name) {
+        //console.log(ingredients.value.bread[0].ingredient[0].name)
+        TotalPrice.value = TotalPrice.value + ingredients.value.vegetable[0].ingredient[i].price
+
+      }
+
+    }
+
+
+  }
+
+  for (let h = 0; h < data.value.bread.length; h++) {
+    
+    if(ingredients.value.bread[0].ingredient[h].name == data.value.bread ) {
+      TotalPrice.value =TotalPrice.value+ingredients.value.bread[0].ingredient[h].price
+    }
+
+  }
+
+
+
+}
 
 
 </script>
 
 <template>
-  <div v-if="!formShow" class="text-center text-2xl mt-36">
-      กรุณาล็อกอินเพื่อเพิ่มพิซซ่า
+
+
+  <div class="mt-10 sm:mt-0">
+    
+    <div class="flex justify-center mt-20 ">
+
+      <div class="mt-5 md:col-span-2 md:mt-0 w-2/6">
+
+        <div class="overflow-hidden shadow sm:rounded-md ">
+          <div class="space-y-6 bg-white px-4 py-5 sm:p-6 ">
+
+            <div class="flex justify-center"> <img class="w-96 " src="../assets/cat.png" /></div>
+
+            <div class="text-2xl text-center">เลือกหน้าพิซซ่าของคุณ</div>
+
+            <fieldset v-for='item in ingredients.meat'>
+              <legend class="sr-only"></legend>
+              <div class="text-base font-medium text-gray-900">{{ item.id }}</div>
+              <div class="mt-4 space-y-4">
+
+
+                <div class="flex items-start" v-for='element in item.ingredient'>
+
+                  <div class="flex h-5 items-center">
+                    <input v-model="data.meat" :value="element.name" :name="element.name" type="checkbox"
+                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label :for="element.name" class="font-medium text-gray-700">{{ element.name }}</label>
+                    <p class="text-gray-500">${{ element.price }}</p>
+                  </div>
+
+
+                </div>
+
+
+              </div>
+            </fieldset>
+
+            <fieldset v-for='item in ingredients.vegetable'>
+              <legend class="sr-only"></legend>
+              <div class="text-base font-medium text-gray-900">{{ item.id }}</div>
+              <div class="mt-4 space-y-4">
+
+
+                <div class="flex items-start" v-for='element in item.ingredient'>
+
+                  <div class="flex h-5 items-center">
+                    <input  v-model="data.vegetable" :value="element.name" name="comments" type="checkbox"
+                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label  class="font-medium text-gray-700">{{ element.name }}</label>
+                    <p class="text-gray-500">${{ element.price }}</p>
+                  </div>
+
+
+                </div>
+
+
+              </div>
+            </fieldset>
+
+            <fieldset v-for='item in ingredients.bread'>
+              <legend class="contents text-base font-medium text-gray-900">{{ item.id }}</legend>
+              <p class="text-sm text-gray-500">ขนมปังหอมๆ แป้งทำเอง นวดสดทุกชิ้น</p>
+              <div class="mt-4 space-y-4">
+
+
+                <div class="flex items-start" v-for='element in item.ingredient'>
+                  <div class="flex h-5 items-center">
+                    <input v-model="data.bread" :value="element.name" id="push-everything" name="push-notifications"
+                      type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  </div>
+                  <div class=" text-sm">
+                    <label for="push-everything"
+                      class="ml-3 block text-sm font-medium text-gray-700">{{ element.name }}</label>
+                    <p class="text-gray-500 ml-3">${{ element.price }}</p>
+                  </div>
+                </div>
+
+
+              </div>
+            </fieldset>
+          </div>
+          <div>
+
+            <div class="ml-3 block text-xl font-medium text-gray-700"> <span class="text-sky-700 font-bold">summary
+              </span>
+              <br />
+              <span class="font-bold"> meat :</span> <span v-for="(item, index) in data.meat">{{ item }} <span
+                  v-if="index != data.meat.length - 1">,</span></span>
+              <br />
+              <span class="font-bold"> vegetable :</span> <span v-for="(item, index) in data.vegetable">{{ item }} <span
+                  v-if="index != data.vegetable.length - 1">,</span></span>
+            </div>
+
+            <div class="ml-3 block text-xl font-medium text-gray-700">
+
+              <span class="text-sky-700 font-bold">total price : </span>{{ TotalPrice }}
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <button type="submit"
+              class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">add
+              to cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
-  <div v-if="formShow">
- <!-- <div class="text-blue-200 text-sm">{{ingredients}}</div> -->
 
-      
- <div v-for='item in ingredients.meat'>
-    {{item.id}}
-  <li v-for='element in item.ingredient'>
-    {{element}}
-  </li>
- </div>
-
-
- <div v-for='item in ingredients.bread'>
-    {{item.id}}
-  <li v-for='element in item.ingredient'>
-    {{element}}
-  </li>
- </div>
-
-
-
- <div v-for='item in ingredients.vegetable'>
-    {{item.id}}
-  <li v-for='element in item.ingredient'>
-    {{element}}
-  </li>
- </div>
- 
-
-  </div>
 </template>
 
 <style scoped>
