@@ -49,14 +49,26 @@ async function getIngredients(){
 }
 
     
-
+const formShow =ref(true)
 onMounted(() => {
     getIngredients() 
+
+    const check = localStorage.getItem("username")
+if(check==null) {
+	formShow.value = false
+}
+
 })
+
+
+
 </script>
 
 <template>
-  <div>
+  <div v-if="!formShow" class="text-center text-2xl mt-36">
+      กรุณาล็อกอินเพื่อเพิ่มพิซซ่า
+  </div>
+  <div v-if="formShow">
  <!-- <div class="text-blue-200 text-sm">{{ingredients}}</div> -->
 
       

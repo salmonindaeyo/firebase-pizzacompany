@@ -1,5 +1,25 @@
 <script setup>
-  import { ref, onBeforeMount } from "vue";
+  import { ref, onBeforeMount , onMounted} from "vue";
+
+
+      
+const checkUser =ref(true)
+onMounted(() => {
+
+    const check = localStorage.getItem("username")
+if(check==null) {
+	checkUser.value = false
+}
+
+})
+
+function logout ( ) {
+
+  localStorage.removeItem("username");
+  location.reload();
+
+}
+
 
 const open = ref(true)
 
@@ -18,7 +38,7 @@ function toggle () {
       <img src="../assets/ntwlogo.png" class="w-24" />
   
     </div>
-    <div class="md:visible sm:invisible invisible lg:invisible ">
+    <div class="visible  md:invisible  ">
       <button @click="toggle ()" class="mr-4 bg-white  flex items-center px-3 py-2 border rounded text-teal-lighter border-black hover:text-black hover:border-red-300">
         <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
       </button>
@@ -55,7 +75,7 @@ function toggle () {
           
       </li>
 
-      <li>
+      <li v-if="!checkUser">
        <router-link
               :to="{name: 'login'  }"
               class="
@@ -69,11 +89,27 @@ function toggle () {
             >
           
       </li>
+
+      <li v-if="checkUser">
+       <span
+              :to="{name: ''  }"
+              class="
+                  text-2xl     block
+                md:hover:bg-yellow-100 md:hover:px-1  md:hover:rounded-lg
+                md:hover:text-orange-500 md:p-0
+                hover:bg-gray-100 md:hover:bg-transparent md:p-0 
+                py-2 pr-4 pl-3
+              "
+              @click="logout()"
+              >👤 log out</span
+            >
+          
+      </li>
      
     </ul>
       </div>
       <div>
-        <a href="#" class="ml-5 no-underline inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparent hover:text-white hover:bg-red-500 mt-4 sm:mt-0">🛒</a>
+        <router-link  :to="{name: 'cart'  }" class="ml-5 no-underline inline-block text-sm px-4 py-2 leading-none border rounded text-black border-black hover:border-transparent hover:text-white hover:bg-red-500 mt-4 sm:mt-0">🛒</router-link>
       </div>
     </div>
   </nav>
