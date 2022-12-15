@@ -95,7 +95,7 @@ const PriceThan = ref(1)
 
   async function pizzaListPriceThan (ssss) {
     PizzaCart.value=[]
-    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , where("price", ">", ssss))
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , where("price", ">", ssss) , orderBy("price","desc"))
    
   
       const pizzaSnapshot = await getDocs(pizzaRef)
