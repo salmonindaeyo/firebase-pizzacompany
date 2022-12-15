@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { onSnapshot , query , collection , getDoc , getDocs, deleteDoc , doc , setDoc, Timestamp , addDoc , updateDoc , where  , limit ,getCountFromServer} from "firebase/firestore"
+import { onSnapshot , query , collection , getDoc , getDocs, deleteDoc , doc , orderBy , setDoc, Timestamp , addDoc , updateDoc , where  , limit ,getCountFromServer} from "firebase/firestore"
 import db from '../firebase/init.js'
 
 const cart = ref({count:"",price:"",user:""})
@@ -11,6 +11,8 @@ async function getCart(){
     console.log(Username.value + "xx")
   const qry =  query(collection(db, 'cart'))
   const postsQry = query(qry,where("user","==",Username.value))
+  const snapshot2 = await getCountFromServer(collection(db,"cart",Username.value,"Pizza"));
+  countPizz.value =   snapshot2.data().count
   const un = await onSnapshot(postsQry, (querySnap) => {
     cart.value=[]
   querySnap.forEach((doc) => {
@@ -21,7 +23,7 @@ async function getCart(){
     })
   })
 
-  pizzaList(limitPizza.value)
+  pizzaList(countPizz.value)
 
 }
 
@@ -57,8 +59,131 @@ async function pizzaList (ssss) {
 
   }
 
+  async function pizzaListAsc (ssss) {
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , orderBy("price","asc"))
+    const snapshot2 = await getCountFromServer(collection(db,"cart",Username.value,"Pizza"));
+  countPizz.value =   snapshot2.data().count
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
+  async function pizzaListDesc (ssss) {
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , orderBy("price","desc"))
+    const snapshot2 = await getCountFromServer(collection(db,"cart",Username.value,"Pizza"));
+  countPizz.value =   snapshot2.data().count
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
+const PriceThan = ref(1)
+
+  async function pizzaListPriceThan (ssss) {
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , where("price", ">", ssss))
+   
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
+  const PricelessThan = ref(1)
+
+  async function pizzaListPricelessThan (ssss) {
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(ssss) , where("price", "<", ssss))
+   
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
+
+
+  async function pizzaListMax () {
+    
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(1) , orderBy("price","desc"))
+    var MaxPrice = 0
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        MaxPrice = pizza.data().price
+      })
+
+      const pizzaRef2 = query(collection(db,"cart",Username.value,"Pizza") , where("price", "==", MaxPrice))
+   
+  
+      const pizzaSnapshot2 = await getDocs(pizzaRef2)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
+  async function pizzaListMin () {
+    
+    PizzaCart.value=[]
+    const pizzaRef = query(collection(db,"cart",Username.value,"Pizza"),limit(1) , orderBy("price","asc"))
+    var MaxPrice = 0
+  
+      const pizzaSnapshot = await getDocs(pizzaRef)
+      pizzaSnapshot.forEach((pizza)=> {
+        MaxPrice = pizza.data().price
+      })
+
+      const pizzaRef2 = query(collection(db,"cart",Username.value,"Pizza") , where("price", "==", MaxPrice))
+   
+  
+      const pizzaSnapshot2 = await getDocs(pizzaRef2)
+      pizzaSnapshot.forEach((pizza)=> {
+        let pizzadata = pizza.data()
+        pizzadata.id = pizza.id
+        PizzaCart.value.push(pizzadata)
+        console.log(PizzaCart.value)
+      })
+
+  }
+
 
 async function deletePizza(index) {
+
+    const test = await updateDoc(doc(db,"cart",Username.value), {
+    count: cart.value.count-1,
+    price :cart.value.price - PizzaCart.value[index].price
+   
+});
+
     const docRef = doc(db,"cart",Username.value,"Pizza",PizzaCart.value[index].id);
     PizzaCart.value.splice(index, 1)
 
@@ -69,6 +194,10 @@ deleteDoc(docRef)
 .catch(error => {
     console.log(error);
 })
+
+
+
+
 }
 
     
@@ -84,7 +213,7 @@ getCart()
 
 })
 
-const limitPizza = ref(3)
+const limitPizza = ref(1)
 const searchValue =ref("")
 
 </script>
@@ -130,7 +259,7 @@ const searchValue =ref("")
              {{PizzaCart.id}}
             </div>
           </div>
-
+            
           <div class="flex justify-center w-1/5 font-semibold text-sm">  <span v-for="(meat, index) in PizzaCart.meat">{{meat}}<span v-if="index!=PizzaCart.meat.length-1">,</span></span></div>
           <div class="flex justify-center w-1/5 font-semibold text-sm">  <span v-for="(vegetable, index) in PizzaCart.vegetable">{{vegetable}}<span v-if="index!=PizzaCart.vegetable.length-1">,</span></span></div>
           <span class="text-center w-1/5 font-semibold text-sm">{{PizzaCart.bread}}</span>
@@ -155,12 +284,44 @@ const searchValue =ref("")
 
         <div class="flex font-semibold text-gray-600 text-sm mt-10 ml-20">limit 
 
-            <input @change=" pizzaList(limitPizza)" :max="countPizz" type="number" class="ml-2 w-16 outline-none focus:outline-none text-center h-5 bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" v-model="limitPizza"/>
+            <input @change=" pizzaList(limitPizza)" :max="countPizz" min="1" type="number" class="ml-2 w-16 outline-none focus:outline-none text-center h-5 bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" v-model="limitPizza"/>
 
 
         </div>
-    </Div>
 
+        <div @click="pizzaListAsc(countPizz)" class="flex font-semibold text-gray-600 text-sm mt-10 ml-20"> asc 
+        </div>
+
+        <div @click="pizzaListDesc(countPizz)" class="flex font-semibold text-gray-600 text-sm mt-10 ml-20"> desc 
+        </div>
+        
+
+        <div class="flex font-semibold text-gray-600 text-sm mt-10 ml-20">โชว์ราคามากกว่า 
+
+<input @change=" pizzaListPriceThan(PriceThan)"  min="1" type="number" class="ml-2 w-16 outline-none focus:outline-none text-center h-5 bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" v-model="PriceThan"/>
+
+
+</div>
+
+<div class="flex font-semibold text-gray-600 text-sm mt-10 ml-20">โชว์ราคาน้อยกว่า 
+
+<input @change=" pizzaListPricelessThan(PricelessThan)"  min="1" type="number" class="ml-2 w-16 outline-none focus:outline-none text-center h-5 bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" v-model="PricelessThan"/>
+
+
+</div>
+
+
+
+    </Div>
+<div class="flex justify-center">
+
+     <div @click="pizzaListMax()" class="flex font-semibold text-gray-600 text-sm mt-10 ml-20"> max 
+        </div>
+
+        <div @click="pizzaListMin()" class="flex font-semibold text-gray-600 text-sm mt-10 ml-20"> min
+        </div>
+</div>
+   
 
       </div>
 

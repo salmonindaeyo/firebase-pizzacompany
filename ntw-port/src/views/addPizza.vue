@@ -189,10 +189,9 @@ const docSnap = await getDoc(docRef);
 if (docSnap.exists()) {
   console.log("Document data:", docSnap.data());
 
-await setDoc(doc(db, "cart", check.value), {
+await updateDoc(doc(db, "cart", check.value), {
     count:countCart.value ,
    price: cartPrice.value,
-    user : docSnap.data().user
 });
 } else {
   // doc.data() will be undefined in this case
